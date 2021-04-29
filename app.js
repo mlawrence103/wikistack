@@ -1,15 +1,19 @@
 const express = require('express');
 const morgan = require('morgan');
 const html = require('html-template-tag');
-const { db,Page,User } = require('./models');
+const userRouter = require('./routes/user')
+const wikiRouter = require('./routes/wiki')
+const { db, Page, User } = require('./models');
 
 const PORT = 1337;
 
-app = express();
+const app = express();
 
 app.use(morgan('dev'));
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({extended: false}));
+app.use('/user', userRouter);
+app.use('/wiki', wikiRouter);
 
 db.authenticate()
   .then(() => {
@@ -27,19 +31,11 @@ async function init(){
 
 init();
 
-app.get('/', async (req,res,next) => {
+//routes
+app.get('/', (req,res,next) => {
   try{
-    res.send(html`<!DOCTYPE html>
-    <html>
-    <head>
-      <title>Wikistack</title>
-      <link rel="stylesheet" href="/style.css" />
-    </head>
-    <body>
-      <h1>Hello World</h1>
-      <a href="http://google.com">Google</a>
-    </body>
-    </html>`);
+    res.redirect('/wiki');
+
   } catch(error){
     next(error);
   }
