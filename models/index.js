@@ -17,22 +17,6 @@ const Page = db.define('page', {
   status: {
     type: Sequelize.ENUM('open','closed')
   }
-},
-{
-//   hooks: {
-//     beforeValidate: (title) => {
-//       let slug = title;
-//       if(!title){
-//           //code to randomly generate title/slug
-//           slug = Math.random.toString(16).substr(2,8);
-//       }
-//       //create slug from existing title
-//       slug = slug.replace(/\s+/g,'_');
-//       slug = slug.replace(/\W/g,'');
-//       console.log('>>>>>final slug',slug);
-//       return slug;
-//   }
-// }
 });
 
 const User = db.define('user', {
